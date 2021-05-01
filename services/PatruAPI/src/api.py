@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 from src.decorators import exception
 from src.core.parameters import CORS
-import cli
+import requests
 
 @exception
 def request_api(req):
@@ -26,7 +26,15 @@ def request_api(req):
     if req.method == 'POST':
 
         json_body = req.get_json()
-        cli_commands = json_body['cli_commands']
-        cli.cli(cli_commands)
+        IP_ADRESS = json_body['cli_commands']
 
-        return cli_commands, 201, CORS
+        request_data = {
+            "username": "developer",
+            "password": "C1sco12345"
+        }
+
+        req = requests.post(f'https://{IP_ADRESS}/api/v0/authenticate', headers={'authorization':\
+        '2j3k3o5p5i3p1p3oi', 'Content-Type': 'application/json',},\
+            data=json.dumps(request_data))
+
+        return req.text, 201, CORS
