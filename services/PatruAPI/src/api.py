@@ -26,15 +26,15 @@ def request_api(req):
     if req.method == 'POST':
 
         json_body = req.get_json()
-        IP_ADRESS = json_body['cli_commands']
+        IP_ADDRESS = json_body['IP_ADDRESS']
 
         request_data = {
             "username": "developer",
             "password": "C1sco12345"
         }
 
-        req = requests.post(f'https://{IP_ADRESS}/api/v0/authenticate', headers={'authorization':\
+        req = requests.post(f'https://{IP_ADDRESS}/api/v0/authenticate', headers={'authorization':\
         '2j3k3o5p5i3p1p3oi', 'Content-Type': 'application/json',},\
-            data=json.dumps(request_data))
+            data=json.dumps(request_data), verify = False)
 
         return req.text, 201, CORS
