@@ -1,0 +1,101 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "API PATRULHA",
+    "description": "Microsserviço de geração de requests to devices",
+    "contact": {
+      "email": "alestanalves@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "API PATRULHA",
+      "description": "Microsserviço de geração de requests to devices"
+    }
+  ],
+  "paths": {
+    "/PatruAPI": {
+      "post": {
+        "tags": [
+          "PatruAPI"
+        ],
+        "summary": "Gera PatruAPI",
+        "description": "Gera acesso e escrita a diversos devices",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatruAPI"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content"
+          },
+          "401": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Data or service not found"
+          },
+          "405": {
+            "description": "Method not allowed"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    },
+    "schemas": {
+      "PatruAPI": {
+        "type": "object",
+        "properties": {
+          "cli_commands": {
+            "type": "string",
+            "format": "string",
+            "example": "no shut"
+          }
+        }
+      },
+      "Result": {
+        "type": "object",
+        "properties": {
+          "commands": {
+            "type": "string",
+            "format": "string",
+            "example": "sucess"
+          }
+        }
+      }
+    }
+  }
+}

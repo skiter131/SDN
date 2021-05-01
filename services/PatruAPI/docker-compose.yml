@@ -1,0 +1,79 @@
+version: '2.4'
+services:
+
+    features:
+        container_name: features
+        image: features
+        restart: always
+        ports:
+            - "5002:5000"
+        environment:
+            - TZ="America/Sao_Paulo"
+        networks:
+            - features
+
+    ##### ===== LOG ===== #####
+
+    mongodb:
+        image: mongo:3
+        volumes:
+            - /home/hd/tiago/mongo:/data/db
+        environment:
+            - TZ="America/Sao_Paulo"
+        logging:
+            driver: none
+        networks:
+            - features
+
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.5
+        environment:
+            - TZ="America/Sao_Paulo"
+            - http.host=0.0.0.0
+            - transport.host=localhost
+            - network.host=0.0.0.0
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        volumes:
+            - /home/hd/tiago/elasticsearch:/usr/share/elasticsearch/data
+        logging:
+            driver: none
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        mem_limit: 1g
+        networks:
+            - features
+
+    graylog:
+        image: graylog/graylog:3.3
+        environment:
+            - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+            - GRAYLOG_HTTP_EXTERNAL_URI=http://127.0.0.1:9000/
+            - GRAYLOG_ROOT_TIMEZONE=America/Sao_Paulo
+            - TZ="America/Sao_Paulo"
+        volumes:
+            - /home/hd/tiago/graylog:/usr/share/graylog/data/journal
+        logging:
+            driver: none
+        links:
+            - mongodb:mongo
+            - elasticsearch
+        depends_on:
+            - mongodb
+            - elasticsearch
+        ports:
+            - 9000:9000
+            - 1514:1514
+            - 1514:1514/udp
+            - 12201:12201
+            - 12201:12201/udp
+        networks:
+            - features
+
+
+##### ===== REDE ===== #####
+
+networks:
+    features:
+        driver: bridge

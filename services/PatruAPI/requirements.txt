@@ -1,0 +1,15 @@
+requests
+flask
+pandas
+numpy
+flask-swagger-ui
+graypy
+uwsgi
+pytest 
+pytest-it
+coverage 
+pytest-cov 
+pytest-flask
+flask
+flask-shell-ipython
+flask_swagger_ui
