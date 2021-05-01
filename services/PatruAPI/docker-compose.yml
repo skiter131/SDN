@@ -10,7 +10,7 @@ services:
         environment:
             - TZ="America/Sao_Paulo"
         networks:
-            - features
+            - patrulha
 
     ##### ===== LOG ===== #####
 
@@ -23,7 +23,7 @@ services:
         logging:
             driver: none
         networks:
-            - features
+            - patrulha
 
     elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.5
@@ -34,7 +34,7 @@ services:
             - network.host=0.0.0.0
             - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
         volumes:
-            - /home/hd/tiago/elasticsearch:/usr/share/elasticsearch/data
+            - /home/hd/alestan/elasticsearch:/usr/share/elasticsearch/data
         logging:
             driver: none
         ulimits:
@@ -53,7 +53,7 @@ services:
             - GRAYLOG_ROOT_TIMEZONE=America/Sao_Paulo
             - TZ="America/Sao_Paulo"
         volumes:
-            - /home/hd/tiago/graylog:/usr/share/graylog/data/journal
+            - /home/hd/alestan/graylog:/usr/share/graylog/data/journal
         logging:
             driver: none
         links:
@@ -69,11 +69,11 @@ services:
             - 12201:12201
             - 12201:12201/udp
         networks:
-            - features
+            - patrulha
 
 
 ##### ===== REDE ===== #####
 
 networks:
-    features:
+    patrulha:
         driver: bridge
