@@ -1,9 +1,9 @@
 version: '2.4'
 services:
 
-    features:
-        container_name: features
-        image: features
+    API_PATRULHA:
+        container_name: API_PATRULHA
+        image: API_PATRULHA
         restart: always
         ports:
             - "5002:5000"
@@ -17,7 +17,7 @@ services:
     mongodb:
         image: mongo:3
         volumes:
-            - /home/hd/tiago/mongo:/data/db
+            - /home/hd/alestan/mongo:/data/db
         environment:
             - TZ="America/Sao_Paulo"
         logging:
