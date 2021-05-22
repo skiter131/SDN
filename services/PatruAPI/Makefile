@@ -8,5 +8,3 @@ html-coverage:
 docker-comp:
 	sudo docker build -f PatruAPI/Dockerfile -t PatruAPI ./PatruAPI
 	sudo docker-compose --compatibility up
-
-
