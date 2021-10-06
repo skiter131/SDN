@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 from src.decorators import exception
 from src.core.parameters import CORS
+from netmiko import ConnectHandler
 import requests
 
 @exception
@@ -26,15 +27,20 @@ def request_api(req):
     if req.method == 'POST':
 
         json_body = req.get_json()
-        IP_ADDRESS = json_body['IP_ADDRESS']
+        command_body = json_body['cmd']
+       
+        cisco = { 
+            'device_type': 'cisco_ios', 
+            'host': 'sandbox-iosxe-latest-1.cisco.com', 
+            'username': 'developer', 
+            'password': 'C1sco12345', 
+        }  
 
-        request_data = {
-            "username": "developer",
-            "password": "C1sco12345"
-        }
+        net_connect = ConnectHandler(**cisco)
+        net_connect.find_prompt()
 
-        req = requests.post(f'https://{IP_ADDRESS}/api/v0/authenticate', headers={'authorization':\
-        '2j3k3o5p5i3p1p3oi', 'Content-Type': 'application/json',},\
-            data=json.dumps(request_data), verify = False)
+        #config_commands = ['do show int g1', 'do show ip int brief']
 
-        return req.text, 201, CORS
+        output =  net_connect.send_config_set(command_body)
+        
+        return output, 201, CORS
