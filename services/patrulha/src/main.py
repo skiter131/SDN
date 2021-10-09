@@ -4,9 +4,8 @@ Serviços para gerar o endpoint da aplicação
 
 import src.api as request_api
 from src.core.parameters import CORS
-from src.decorators import validate_request, create_log, exception
+from src.decorators import validate_request, exception
 
-@create_log
 @validate_request
 @exception
 def services(req):

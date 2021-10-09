@@ -14,3 +14,4 @@ flask
 flask-shell-ipython
 flask_swagger_ui
 virl2_client
+netmiko
