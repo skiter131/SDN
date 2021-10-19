@@ -4,15 +4,10 @@ a serem computados e analisados em nossa
 aplicação
 """
 
-# import json
-# import logging
-# import numpy as np
 # import pandas as pd
-# import requests
 from src.decorators import exception
 from src.core.parameters import CORS
 from netmiko import ConnectHandler
-
 
 @exception
 def request_api(req):
@@ -44,7 +39,7 @@ def request_api(req):
         net_connect.find_prompt()
 
         #Comando Enviado
-        output = net_connect.send_command("show runn")
+        output = net_connect.send_command(json_body['command'])
 
         #Saida do comando
         #print(output)
