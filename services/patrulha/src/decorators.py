@@ -5,7 +5,6 @@ declare the decorators
 
 import logging
 import functools
-import graypy
 from src.core.parameters import CORS
 import traceback
 
@@ -33,37 +32,6 @@ class ServiceFilter(logging.Filter):
         record.service = self.service
         return True
 
-
-def create_log(function):
-    """
-    Create archive log
-    Args: function
-    Return: the function.
-    """
-
-    def wrapper(*args, **kwargs):
-
-        logger = logging.getLogger()
-        for handler in logger.handlers[:]:
-            logger.removeHandler(handler)
-
-        logger.setLevel(logging.DEBUG)
-        handler = graypy.GELFUDPHandler('graylog', 12201, debugging_fields=False)
-        logger.addHandler(handler)
-        logger.addFilter(ServiceFilter())
-
-        try:
-            eventid = args[0].get_json()['eventid']
-        except:
-            eventid = 'nao identificado'
-
-        logger.addFilter(EventidFilter(eventid))
-
-        return function(*args, **kwargs)
-
-    return wrapper
-
-
 def validate_request(function):
     """
     Creates a logging object and returns it
@@ -78,11 +46,11 @@ def validate_request(function):
             logging.error('Json body não encontrado na requisição')
             return 'json body is not found', 404, CORS
 
-        if 'cli' not in json_body or not json_body['cli']:
-            logging.error(f'Identificação de evento não encontrada (cli key)')
-            return 'eventid key was not found', 404, CORS
+        if 'device' not in json_body or not json_body['device']:
+            logging.error(f'Identificação de evento não encontrada (device key)')
+            return 'device key was not found', 404, CORS
 
-        logging.info(f'Requisição do evento - {json_body["eventid"]} aceita')
+        logging.info(f'Requisição aceita')
 
         # Check token
         authorization = args[0].headers.get('authorization', '')
