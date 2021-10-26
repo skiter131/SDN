@@ -3,19 +3,31 @@ from netmiko import ConnectHandler
 
 cisco = { 
 'device_type': 'cisco_ios', 
-'host': 'sandbox-iosxe-latest-1.cisco.com', 
-'username': 'developer', 
-'password': 'C1sco12345', 
+'host': '192.168.123.2', 
+'username': 'patrulha', 
+'password': '1234',
+'secret' :  'patrulha123'
 }  
 
-net_connect = ConnectHandler(**cisco)
-net_connect.find_prompt()
+# net_connect = ConnectHandler(**cisco)
 
-config_commands = ['do show int g1', 'do show ip int brief']
+# print(net_connect.find_prompt())
 
-output =  net_connect.send_config_set(config_commands)
+# config_commands = ['do show ip int brief']
 
-# with open('cisco.csv','w+', encoding = 'utf-8') as arquivo:
-#     arquivo.write(output)
+# output =  net_connect.send_config_set(config_commands)
 
+command = "show ip int brief"
+
+# with open('cisco.csv','w+', encoding = 'utf-8') as net_connect:
+#     output = net_connect.send_command(command)
+
+# #print(output)
+
+with ConnectHandler(**cisco) as net_connect:
+    net_connect.enable()
+    output = net_connect.send_command(command)
+
+print()
 print(output)
+print()
