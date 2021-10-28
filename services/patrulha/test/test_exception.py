@@ -8,8 +8,7 @@ entrar na pasta tests
 e make test
 
 """
-import unittest
-import pytest
+
 from pytest import mark 
 from src.decorators import exception
 

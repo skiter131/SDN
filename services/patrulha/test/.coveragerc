@@ -5,4 +5,4 @@ exclude_lines =
     if __name__ == "__main__":
 
 omit = 
-    /mapper/src/wsgi.py
+    /patrulha/src/wsgi.py

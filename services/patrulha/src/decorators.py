@@ -49,6 +49,14 @@ def validate_request(function):
         if 'device' not in json_body or not json_body['device']:
             logging.error(f'Identificação de evento não encontrada (device key)')
             return 'device key was not found', 404, CORS
+    
+        if 'commands' not in json_body or not json_body['commands']:
+            logging.error(f'Identificação de evento não encontrada (commands key)')
+            return 'commands key was not found', 404, CORS
+
+        if 'host' not in json_body or not json_body['host']:
+            logging.error(f'Identificação de evento não encontrada (host key)')
+            return 'host key was not found', 404, CORS
 
         logging.info(f'Requisição aceita')
 

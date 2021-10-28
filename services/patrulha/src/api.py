@@ -1,14 +1,8 @@
-"""
-Este arquivo .py gera os dados
-a serem computados e analisados em nossa
-aplicação
-"""
-
-# import pandas as pd
-from src.decorators import exception
+from src.decorators import exception, validate_request
 from src.core.parameters import CORS
 from netmiko import ConnectHandler
 
+@validate_request
 @exception
 def request_api(req):
 
@@ -24,28 +18,19 @@ def request_api(req):
 
         json_body = req.get_json()
 
-        #Informações do Usuario
+        # 'cisco_ios'
         cisco = { 
-            'device_type': json_body['device'], 
+            'device_type': 'cisco_ios', 
             'host': json_body['host'], 
-            'username': json_body['user'], 
-            'password': json_body['pass']
+            'username': 'patrulha', 
+            'password': '1234',
+            'secret' :  'patrulha123'
         }
 
-        # 'cisco_ios'
+        #commands = "show ip int brief"
 
-        #Conexão com o elemento
-        net_connect = ConnectHandler(**cisco)
-        net_connect.find_prompt()
-
-        config_commands = json_body['commands']
-
-        output = net_connect.send_config_set(config_commands)
-
-        #Comando Enviado no list
-        #output = net_connect.send_command(json_body['command'])
-
-        #Saida do comando
-        #print(output)
+        with ConnectHandler(**cisco) as net_connect:
+            net_connect.enable()
+            output = net_connect.send_config_set(json_body['commands'])
 
         return output, 201, CORS
