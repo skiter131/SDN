@@ -23,7 +23,7 @@ def request_api(req):
             'device_type': json_body['device'], 
             'host': json_body['host'], 
             'username': 'patrulha', 
-            'password': 'patrulha123',
+            'password': 'patrulha12345',
             'secret' :  'patrulha12345'
         }
 
