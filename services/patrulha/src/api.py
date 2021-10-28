@@ -20,11 +20,11 @@ def request_api(req):
 
         # 'cisco_ios'
         cisco = { 
-            'device_type': 'cisco_ios', 
+            'device_type': json_body['device'], 
             'host': json_body['host'], 
             'username': 'patrulha', 
-            'password': '1234',
-            'secret' :  'patrulha123'
+            'password': 'patrulha123',
+            'secret' :  'patrulha12345'
         }
 
         #commands = "show ip int brief"
