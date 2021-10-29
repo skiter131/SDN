@@ -1,6 +1,8 @@
 # SDN
 Software defined networking for the Brazilian army
 
+Install docker and docker-compose https://docs.docker.com/compose/install/
+
 ## Start
 
 ### Rodar docker-compose
