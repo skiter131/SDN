@@ -1,7 +1,11 @@
 # SDN
 Software defined networking for the Brazilian army
 
-### Virl2_client
+## Rodar docker-compose
+```
+make docker-comp
+```
 
-https://developer.cisco.com/docs/virl2-client/
+### Rodar docker-compose windows 
 
+## Rodar docker-win
