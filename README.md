@@ -6,6 +6,18 @@ Software defined networking for the Brazilian army
 make docker-comp
 ```
 
-### Rodar docker-compose windows 
+## Rodar docker-compose windows 
 
-## Rodar docker-win
+```
+make docker-win
+```
+
+## Request API 
+
+localhost:5002/apipatrulha
+
+### Dependencias 
+
+- Authorization Token
+- JSON Body
+- Method POST
